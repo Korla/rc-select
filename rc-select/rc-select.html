@@ -1,0 +1,22 @@
+<div class="rc-select">
+  <div class="rc-select-selected form-control"
+       ng-class="{
+         'rc-select-selected-show-dropdown': currentState.showDropdown,
+         'rc-select-selected-focused': currentState.focused
+       }"
+       ng-bind="selected"
+       ng-click="currentState.selectedClicked()"></div>
+  <div class="rc-select-options" ng-show="currentState.showDropdown">
+    <div class="rc-select-option"
+         ng-repeat="option in options"
+         ng-click="currentState.optionClicked(option)"
+         ng-class="{
+           'rc-select-option-selected': selected === option
+         }"
+         ng-include src="template"></div>
+  </div>
+  <input class="rc-select-hidden-input"
+         ng-focus="currentState.focus()"
+         ng-blur="blurIfInputWasntClicked($event)"
+         ng-keydown="keyDown($event.keyCode)"/>
+</div>
