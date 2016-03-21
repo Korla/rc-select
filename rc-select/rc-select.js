@@ -1,7 +1,8 @@
 angular.module('rc')
   // 1.   Not focused
-  // 1.1. Tabbing from previous input focuses on field
+  // 1.1. Tabbing to input focuses on field
   // 1.2. Clicking focuses on field and opens dropdown
+  // 1.3. Clicking label focuses on field
 
   // 2.   Focused, no dropdown
   // 2.1. Tabbing defocuses and focuses next input
@@ -10,7 +11,7 @@ angular.module('rc')
   // 2.4. Clicking on field opens dropdown
 
   // 3.   Focused, open dropdown
-  // 3.1. Tabbing closes dropdown, defocuses and focuses next (or previous) input
+  // 3.1. Tabbing closes dropdown
   // 3.2. Up and down selects next/previous if applicable
   // 3.3. Enter selects value and keeps focus on field
   // 3.4. Mouse click selects value, closes dropdown and keeps focus on field
