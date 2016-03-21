@@ -15,7 +15,8 @@
          }"
          ng-include src="template"></div>
   </div>
-  <input class="rc-select-hidden-input"
+  <input ng-attr-id="{{id}}"
+         class="rc-select-hidden-input"
          ng-focus="currentState.focus()"
          ng-blur="blurIfInputWasntClicked($event)"
          ng-keydown="keyDown($event.keyCode)"/>

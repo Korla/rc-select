@@ -20,12 +20,14 @@ angular.module('rc')
       transclude: true,
       replace: true,
       scope: {
+        id: '@',
         options: '=',
         selected: '=',
         template: '='
       },
       templateUrl: 'rc-select/rc-select.html',
       link: (scope, element) => {
+        element[0].id = '';
         var states = {
           'Not focused': {
             focused: false,
