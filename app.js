@@ -6,4 +6,4 @@ angular.module('rc', [])
     $scope.selected = $scope.options[0];
   });
 
-  require('./rc-select/rc-select.js');
+require('./rc-select/rc-select.js');
