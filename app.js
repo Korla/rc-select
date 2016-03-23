@@ -6,6 +6,27 @@ angular.module('rc', [])
     $scope.options = ['One', 'Two', 'Three'];
     $scope.selected = $scope.options[0];
     $scope.selectVm = new SelectViewModel($scope.options, 'rc-select/templates/simple.html');
+
+    $scope.options2 = [
+      {
+        text: 'One',
+        value: 1
+      },
+      {
+        text: 'Two',
+        value: 2
+      },
+      {
+        text: 'Three',
+        value: 3
+      }
+    ];
+    $scope.selected2 = $scope.options2[0];
+    $scope.selectVm2 = new SelectViewModel(
+      $scope.options2,
+      'rc-select/templates/simple.html',
+      option => option.value
+    );
   });
 
   require('./rc-select/rc-select.js');

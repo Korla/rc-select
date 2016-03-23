@@ -4,7 +4,7 @@
          'rc-select-selected-show-dropdown': vm.currentState.showDropdown,
          'rc-select-selected-focused': vm.currentState.focused
        }"
-       ng-bind="vm.selected"
+       ng-bind="vm.textFn(vm.selected)"
        ng-click="vm.currentState.selectedClicked()"></div>
   <div class="rc-select-options" ng-show="vm.currentState.showDropdown">
     <div class="rc-select-option"
