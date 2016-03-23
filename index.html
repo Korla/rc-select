@@ -27,15 +27,27 @@
       </div>
     </div>
     <div class="form-group">
+      <label class="col-sm-2 control-label">Selected</label>
+      <div class="col-sm-10">
+        <p class="form-control-static" ng-bind="selected"></p>
+      </div>
+    </div>
+    <div class="form-group">
       <label for="select" class="col-sm-2 control-label">Select</label>
       <div class="col-sm-10">
         <select class="form-control" id="select" ng-model="selected" ng-options="o for o in options"></select>
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">Selected</label>
+      <label for="rcSelect2" class="col-sm-2 control-label">Rc Select 2</label>
       <div class="col-sm-10">
-        <p class="form-control-static" ng-bind="selected"></p>
+        <rc-select id="rcSelect2" vm="selectVm2"></rc-select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Selected 2</label>
+      <div class="col-sm-10">
+        <p class="form-control-static" ng-bind="selected2.text"></p>
       </div>
     </div>
     <div class="form-group">
