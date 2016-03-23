@@ -42,6 +42,7 @@ angular.module('rc')
             blur: () => setState('Not focused'),
             downPressed: () => setState('Focused, open dropdown'),
             selectedClicked: () => setState('Focused, open dropdown'),
+            search: letter => console.log(letter),
           },
           'Focused, open dropdown': {
             focused: true,
@@ -55,6 +56,7 @@ angular.module('rc')
               setState('Focused, no dropdown');
             },
             selectedClicked: () => setState('Focused, no dropdown'),
+            search: letter => console.log(letter),
           }
         }
         var input = element.find('input')[0];
@@ -62,6 +64,8 @@ angular.module('rc')
           scope.currentState = states[state];
           if(scope.currentState.focused === true) {
             input.focus();
+          } else {
+            input.blur();
           }
         }
 
@@ -83,8 +87,15 @@ angular.module('rc')
             '40': 'downPressed',
             '13': 'enterPressed'
           }[keyCode];
-          if(scope.currentState[method]){
-            scope.currentState[method]()
+          if(method) {
+            if(scope.currentState[method]){
+              scope.currentState[method]()
+            }
+          } else {
+            var letter = String.fromCharCode(keyCode);
+            if(letter) {
+              scope.currentState.search(letter.toLowerCase());
+            }
           }
         }
       }
