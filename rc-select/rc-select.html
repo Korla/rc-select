@@ -1,23 +1,23 @@
 <div class="rc-select">
   <div class="rc-select-selected form-control"
        ng-class="{
-         'rc-select-selected-show-dropdown': currentState.showDropdown,
-         'rc-select-selected-focused': currentState.focused
+         'rc-select-selected-show-dropdown': vm.currentState.showDropdown,
+         'rc-select-selected-focused': vm.currentState.focused
        }"
-       ng-bind="selected"
-       ng-click="currentState.selectedClicked()"></div>
-  <div class="rc-select-options" ng-show="currentState.showDropdown">
+       ng-bind="vm.selected"
+       ng-click="vm.currentState.selectedClicked()"></div>
+  <div class="rc-select-options" ng-show="vm.currentState.showDropdown">
     <div class="rc-select-option"
-         ng-repeat="option in options"
-         ng-click="currentState.optionClicked(option)"
+         ng-repeat="option in vm.options"
+         ng-click="vm.currentState.optionClicked(option)"
          ng-class="{
-           'rc-select-option-selected': selected === option
+           'rc-select-option-selected': vm.selected === option
          }"
-         ng-include src="template"></div>
+         ng-include src="vm.template"></div>
   </div>
   <input ng-attr-id="{{id}}"
          class="rc-select-hidden-input"
-         ng-focus="currentState.focus()"
+         ng-focus="vm.currentState.focus()"
          ng-blur="blurIfInputWasntClicked($event)"
-         ng-keydown="keyDown($event.keyCode)"/>
+         ng-keydown="vm.keyDown($event.keyCode)"/>
 </div>
