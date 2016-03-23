@@ -3,12 +3,13 @@ angular.module('rc')
     return {
       transclude: true,
       replace: true,
+      require: 'ngModel',
       scope: {
         id: '@',
         vm: '='
       },
       templateUrl: 'rc-select/rc-select.html',
-      link: (scope, element) => {
+      link: (scope, element, attrs, ngModelCtrl) => {
         element[0].id = '';
 
         var input = element.find('input')[0];
@@ -26,6 +27,9 @@ angular.module('rc')
               scope.vm.currentState.blur();
             }
           }, 10);
+
+        ngModelCtrl.$render = () => scope.vm.selected = ngModelCtrl.$viewValue;
+        scope.$watch('vm.selected', () => ngModelCtrl.$setViewValue(scope.vm.selected));
       }
     }
   });

@@ -15,7 +15,7 @@
 // 3.3. Enter selects value and keeps focus on field
 // 3.4. Mouse click selects value, closes dropdown and keeps focus on field
 // 3.5. Clicking outside closes dropdown
-export default function SelectViewModel(options, selected, template) {
+export default function SelectViewModel(options, template) {
   var setState = state => vm.currentState = states[state];
 
   var select = delta =>
@@ -52,7 +52,7 @@ export default function SelectViewModel(options, selected, template) {
 
   var vm = {
     options,
-    selected,
+    selected: undefined,
     template,
     currentState: states['Not focused'],
     keyDown: keyCode => {
