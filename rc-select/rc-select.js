@@ -1,5 +1,5 @@
 angular.module('rc')
-  .directive('rcSelect', ($timeout) => {
+  .directive('rcSelect', ($window, $timeout) => {
     return {
       transclude: true,
       replace: true,
@@ -9,21 +9,32 @@ angular.module('rc')
         vm: '='
       },
       templateUrl: 'rc-select/rc-select.html',
-      link: (scope, element, attrs, ngModelCtrl) => {
-        element[0].id = '';
+      link: (scope, $element, attrs, ngModelCtrl) => {
+        var element = $element[0];
+        var hiddenInput = element.querySelector('.rc-select-hidden-input');
+        var selectOptionsElement = element.querySelector('.rc-select-options');
+        element.id = '';
 
-        var input = element.find('input')[0];
         scope.$watch('vm.currentState', () => {
           if(scope.vm.currentState.focused === true) {
-            input.focus();
+            hiddenInput.focus();
           } else {
-            input.blur();
+            hiddenInput.blur();
+          }
+
+          if(scope.vm.currentState.showDropdown) {
+            selectOptionsElement.classList.add('calculate-height');
+            var windowHeight = $window.innerHeight;
+            var {height: optionsHeight} = selectOptionsElement.getBoundingClientRect();
+            var {top: distanceToTop, bottom: distanceFromBottomToTop} = element.getBoundingClientRect();
+            scope.optionsUp = scope.vm.shouldDropdownGoUp(windowHeight - distanceFromBottomToTop, optionsHeight, distanceToTop);
+            selectOptionsElement.classList.remove('calculate-height');
           }
         });
 
         scope.blurIfInputWasntClicked = event =>
           $timeout(() => {
-            if(document.activeElement !== input) {
+            if(document.activeElement !== hiddenInput) {
               scope.vm.currentState.blur();
             }
           }, 10);

@@ -2,14 +2,15 @@
   <div class="rc-select-selected form-control"
        ng-class="{
          'rc-select-selected-show-dropdown': vm.currentState.showDropdown,
-         'rc-select-selected-focused': vm.currentState.focused
+         'rc-select-selected-focused': vm.currentState.focused,
+         'rc-select-selected-up': optionsUp && vm.currentState.showDropdown
        }"
        ng-bind="vm.textFn(vm.selected)"
        ng-click="vm.currentState.selectedClicked()"></div>
   <svg class="rc-select-arrow" width="10" height="10" viewbox="0 0 100 100">
     <path d="M100 0 50 80 0 0Z" fill="black"/>
   </svg>
-  <div class="rc-select-options" ng-show="vm.currentState.showDropdown">
+  <div class="rc-select-options" ng-show="vm.currentState.showDropdown" ng-class="{'rc-select-options-up': optionsUp}">
     <div class="rc-select-option"
          ng-repeat="option in vm.options"
          ng-click="vm.currentState.optionClicked(option)"

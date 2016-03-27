@@ -17,6 +17,12 @@
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
     }
+
+    &-up {
+      border-radius: @rc-select-border-radius;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
   }
 
   &-arrow {
@@ -32,12 +38,25 @@
     display: inline-block;
     width: 100%;
     border: 1px solid @col-rc-select-border;
-    border-top: none;
-    border-bottom-left-radius: @rc-select-border-radius;
-    border-bottom-right-radius: @rc-select-border-radius;
     background-color: white;
     z-index: 1;
     box-shadow: 1px 2px 4px -1px rgba(0, 0, 0, 0.3);
+    max-height: 700px;
+    overflow-y: scroll;
+
+    &.calculate-height {
+      visibility: hidden;
+      display: inline-block !important;
+    }
+
+    &-up {
+      bottom: 34px;
+      box-shadow: 1px -2px 4px -1px rgba(0, 0, 0, 0.3);
+      border-bottom: none;
+      border-radius: 0;
+      border-top-left-radius: @rc-select-border-radius;
+      border-top-right-radius: @rc-select-border-radius;
+    }
   }
 
   &-option {

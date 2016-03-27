@@ -15,6 +15,10 @@
 // 3.3. Enter selects value and keeps focus on field
 // 3.4. Mouse click selects value, closes dropdown and keeps focus on field
 // 3.5. Clicking outside closes dropdown
+
+// Dropdown direction
+// Goes up if distance to bottom of window is less than options height and if
+// distance to top is more than options height
 export default function SelectViewModel(options, template, textFn) {
   textFn = textFn || (text => text);
   var setState = state => vm.currentState = states[state];
@@ -51,24 +55,31 @@ export default function SelectViewModel(options, template, textFn) {
     }
   }
 
+  var shouldDropdownGoUp = (distanceToBottom, optionsHeight, distanceToTop) =>
+    distanceToBottom < optionsHeight && optionsHeight < distanceToTop
+
+  var keyDownFunctions = {
+    '38': 'upPressed',
+    '40': 'downPressed',
+    '13': 'enterPressed'
+  };
+  var keyDown = keyCode => {
+    var functionName = keyDownFunctions[keyCode];
+    if(functionName) {
+      if(vm.currentState[functionName]){
+        vm.currentState[functionName]()
+      }
+    }
+  };
+
   var vm = {
     options,
     selected: undefined,
     template,
     textFn,
     currentState: states['Not focused'],
-    keyDown: keyCode => {
-      var method = {
-        '38': 'upPressed',
-        '40': 'downPressed',
-        '13': 'enterPressed'
-      }[keyCode];
-      if(method) {
-        if(vm.currentState[method]){
-          vm.currentState[method]()
-        }
-      }
-    }
+    keyDown,
+    shouldDropdownGoUp
   };
 
   return vm;
