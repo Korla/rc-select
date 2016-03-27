@@ -6,7 +6,7 @@ angular.module('rc', [])
     $scope.options = [];
     for(var i = 0; i < 30; i++) $scope.options.push(i);
     $scope.selected = $scope.options[0];
-    $scope.selectVm = new SelectViewModel($scope.options, 'rc-select/templates/simple.html');
+    $scope.selectVm = new SelectViewModel({options: $scope.options});
 
     $scope.options2 = [];
     for(var i = 0; i < 3; i++) $scope.options2.push({
@@ -14,11 +14,10 @@ angular.module('rc', [])
       value: i
     });
     $scope.selected2 = $scope.options2[0];
-    $scope.selectVm2 = new SelectViewModel(
-      $scope.options2,
-      'rc-select/templates/simple.html',
-      option => option.text
-    );
+    $scope.selectVm2 = new SelectViewModel({
+      options: $scope.options2,
+      textFn: option => option.text
+    });
   });
 
   require('./rc-select/rc-select.js');

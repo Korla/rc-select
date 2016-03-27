@@ -24,69 +24,68 @@
 // A template url can be provided which is used to render options in the Dropdown
 
 // Textfunction
-// A lambda to select which option property to use as display text
-export default function SelectViewModel(options, template, textFn) {
-  textFn = textFn || (text => text);
-  var setState = state => vm.currentState = states[state];
-
-  var getOption = delta =>
-    vm.options[Math.max(0, Math.min(vm.options.indexOf(vm.selected) + delta, vm.options.length - 1))];
-
-  var states = {
-    'Not focused': {
-      focused: false,
-      showDropdown: false,
-      focus: () => setState('Focused, no dropdown'),
-      selectedClicked: () => setState('Focused, open dropdown'),
-    },
-    'Focused, no dropdown': {
-      focused: true,
-      showDropdown: false,
-      blur: () => setState('Not focused'),
-      downPressed: () => setState('Focused, open dropdown'),
-      selectedClicked: () => setState('Focused, open dropdown'),
-    },
-    'Focused, open dropdown': {
-      focused: true,
-      showDropdown: true,
-      blur: () => setState('Focused, no dropdown'),
-      upPressed: () => vm.selected = getOption(-1),
-      downPressed: () => vm.selected = getOption(1),
-      enterPressed: () => setState('Focused, no dropdown'),
-      optionClicked: option => {
-        vm.selected = option;
-        setState('Focused, no dropdown');
+// A lambda to select which option property to use as display textfunction
+export default class SelectViewModel {
+  constructor({options, template, textFn}) {
+    this.options = options || [];
+    this.template = template || 'rc-select/templates/simple.html';
+    this.textFn = textFn || (option => option);
+    this.states = {
+      'Not focused': {
+        focused: false,
+        showDropdown: false,
+        focus: () => this.setState('Focused, no dropdown'),
+        selectedClicked: () => this.setState('Focused, open dropdown'),
       },
-      selectedClicked: () => setState('Focused, no dropdown'),
+      'Focused, no dropdown': {
+        focused: true,
+        showDropdown: false,
+        blur: () => this.setState('Not focused'),
+        downPressed: () => this.setState('Focused, open dropdown'),
+        selectedClicked: () => this.setState('Focused, open dropdown'),
+      },
+      'Focused, open dropdown': {
+        focused: true,
+        showDropdown: true,
+        blur: () => this.setState('Focused, no dropdown'),
+        upPressed: () => this.selected = this.getOption(-1),
+        downPressed: () => this.selected = this.getOption(1),
+        enterPressed: () => this.setState('Focused, no dropdown'),
+        optionClicked: option => {
+          this.selected = option;
+          this.setState('Focused, no dropdown');
+        },
+        selectedClicked: () => this.setState('Focused, no dropdown'),
+      }
     }
+
+    this.setState('Not focused');
+
+    this.keyDownFunctions = {
+      '38': 'upPressed',
+      '40': 'downPressed',
+      '13': 'enterPressed'
+    };
   }
 
-  var shouldDropdownGoUp = (distanceToBottom, optionsHeight, distanceToTop) =>
-    distanceToBottom < optionsHeight && optionsHeight < distanceToTop
+  setState(state) {
+    this.currentState = this.states[state];
+  }
 
-  var keyDownFunctions = {
-    '38': 'upPressed',
-    '40': 'downPressed',
-    '13': 'enterPressed'
-  };
-  var keyDown = keyCode => {
-    var functionName = keyDownFunctions[keyCode];
+  getOption(delta) {
+    return this.options[Math.max(0, Math.min(this.options.indexOf(this.selected) + delta, this.options.length - 1))];
+  }
+
+  shouldDropdownGoUp (distanceToBottom, optionsHeight, distanceToTop) {
+    return distanceToBottom < optionsHeight && optionsHeight < distanceToTop;
+  }
+
+  keyDown(keyCode) {
+    var functionName = this.keyDownFunctions[keyCode];
     if(functionName) {
-      if(vm.currentState[functionName]){
-        vm.currentState[functionName]()
+      if(this.currentState[functionName]){
+        this.currentState[functionName]()
       }
     }
   };
-
-  var vm = {
-    options,
-    selected: undefined,
-    template,
-    textFn,
-    currentState: states['Not focused'],
-    keyDown,
-    shouldDropdownGoUp
-  };
-
-  return vm;
 }
