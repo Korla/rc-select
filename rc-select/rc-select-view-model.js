@@ -76,7 +76,7 @@ export default class SelectViewModel {
     return this.options[Math.max(0, Math.min(this.options.indexOf(this.selected) + delta, this.options.length - 1))];
   }
 
-  shouldDropdownGoUp (distanceToBottom, optionsHeight, distanceToTop) {
+  shouldDropdownGoUp(distanceToBottom, optionsHeight, distanceToTop) {
     return distanceToBottom < optionsHeight && optionsHeight < distanceToTop;
   }
 
