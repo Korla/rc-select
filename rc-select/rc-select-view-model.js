@@ -19,6 +19,12 @@
 // Dropdown direction
 // Goes up if distance to bottom of window is less than options height and if
 // distance to top is more than options height
+
+// Custom templates
+// A template url can be provided which is used to render options in the Dropdown
+
+// Textfunction
+// A lambda to select which option property to use as display text
 export default function SelectViewModel(options, template, textFn) {
   textFn = textFn || (text => text);
   var setState = state => vm.currentState = states[state];
