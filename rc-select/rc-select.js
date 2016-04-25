@@ -37,7 +37,7 @@ angular.module('rc')
             if(document.activeElement !== hiddenInput) {
               scope.vm.currentState.blur();
             }
-          }, 10);
+          }, 200);
 
         ngModelCtrl.$render = () => scope.vm.selected = ngModelCtrl.$viewValue;
         scope.$watch('vm.selected', () => ngModelCtrl.$setViewValue(scope.vm.selected));
